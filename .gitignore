@@ -1,0 +1,70 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub/
+pubspec.lock
+build/
+
+# iOS related
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.podspec.json
+ios/Pods/
+ios/Podfile.lock
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.framework
+
+# Android related
+android/.gradle/
+android/app/build/
+android/captures/
+android/gradle/
+android/gradle-wrapper.jar
+android/gradle-wrapper.properties
+
+# macOS related
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+macos/Flutter/Flutter.podspec.json
+macos/Pods/
+macos/Podfile.lock
+macos/Pods/
+macos/.symlinks/
+
+# Windows related
+windows/Flutter/Flutter.framework
+windows/Flutter/Flutter.podspec
+windows/Flutter/Flutter.podspec.json
+windows/Pods/
+windows/Podfile.lock
+windows/Pods/
+windows/.symlinks/
+
+# Linux related
+linux/Flutter/Flutter.framework
+linux/Flutter/Flutter.podspec
+linux/Flutter/Flutter.podspec.json
+linux/Pods/
+linux/Podfile.lock
+linux/Pods/
+linux/.symlinks/
+
+# Web related
+web/.dart_tool/
+
+# Misc
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Other files
+*.DS_Store
+*.env
+*.flutter-plugins
+*.flutter-plugins-dependencies
+*.pub-cache/
