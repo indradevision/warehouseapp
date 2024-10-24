@@ -40,9 +40,14 @@ class LoginController with ChangeNotifier {
         _token = responseData['token']; // Ganti dengan field token yang sesuai
         notifyListeners();
       } else {
+        // Print the response status code and body before throwing the error
+        print('Error: Status code ${response.statusCode}');
+        print('Error body: ${response.body}');
         throw Exception('Failed to login');
       }
     } catch (error) {
+      // Print the error before throwing it
+      print('Error caught: $error');
       throw error;
     }
   }
