@@ -17,7 +17,7 @@ class LoginController with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        _token = responseData['token']; // Ganti dengan field token yang sesuai
+        // _token = responseData['token']; // Ganti dengan field token yang sesuai
         notifyListeners();
       } else {
         throw Exception('Failed to login');
