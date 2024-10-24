@@ -253,42 +253,43 @@ class _LoginViewState extends State<LoginView> {
   bool _isLoading = false;
 
   void _login() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      await Provider.of<LoginController>(context, listen: false).login(
-        _usernameController.text,
-        _passwordController.text,
-      );
-      Navigator.of(context).pushReplacementNamed('/home'); // Navigasi ke halaman setelah login
-    } catch (error) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('An Error Occurred!'),
-          content: Text(error.toString()),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+  if (!_formKey.currentState!.validate()) {
+    return;
   }
+
+  setState(() {
+    _isLoading = true;
+  });
+
+  try {
+    await Provider.of<LoginController>(context, listen: false).login(
+      _usernameController.text,
+      _passwordController.text,
+    );
+    Navigator.of(context).pushReplacementNamed('/home');
+  } catch (error) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(error.toString()),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
