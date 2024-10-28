@@ -30,13 +30,12 @@ class _HomeViewState extends State<HomeView> {
   }
 
   @override
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Container(
-          padding: const EdgeInsets.only(top: 15),
           width: MediaQuery.of(context).size.width * 0.25,
           child: Image.asset(
             'assets/images/logo-san-wider.png',
@@ -67,7 +66,8 @@ class _HomeViewState extends State<HomeView> {
                 logindata.setBool('login', true);
                 logindata.remove('role');
                 logindata.clear();
-                Restart.restartApp(); // Pastikan Restart sudah terkonfigurasi dengan benar
+                Restart
+                    .restartApp(); // Pastikan Restart sudah terkonfigurasi dengan benar
                 Get.offAllNamed('/login'); // Navigasi setelah logout
               } else if (value == 2) {
                 // checkver(); // Panggil fungsi untuk memeriksa versi
@@ -157,7 +157,7 @@ class _HomeViewState extends State<HomeView> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.indigo[800],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -173,7 +173,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.purple[400],
+        selectedItemColor: Colors.grey[350],
         unselectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
