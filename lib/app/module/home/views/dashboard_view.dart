@@ -14,7 +14,6 @@ class _DashboardViewState extends State<DashboardView> {
   final List<Map<String, dynamic>> _stockData = [];
 
   final List<Map<String, dynamic>> _typePart = [
-    {"id": "ALL", "name": "Semua"},
     {"id": "Parts", "name": "Spare Parts"},
     {"id": "Tires", "name": "Ban"}
   ];
@@ -28,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
   ];
 
   String _selectedBranchId = "ALL"; // Default ID yang dipilih
-  String _selectedTypeParts = "ALL"; // Default ID yang dipilih
+  String _selectedTypeParts = "Parts"; // Default ID yang dipilih
 
   late String endpointSelected;
 
