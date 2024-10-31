@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Untuk mengonversi JSON
@@ -218,8 +220,16 @@ class _DashboardViewState extends State<DashboardView> {
                 labelText: 'Pencarian',
                 hintText: 'Cari berdasarkan nama',
                 prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors
+                          .grey.shade400), // Warna border saat tidak fokus
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: baseColor), // Warna border saat fokus
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 ),
               ),
               onChanged: (query) {

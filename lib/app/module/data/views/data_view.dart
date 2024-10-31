@@ -1,6 +1,15 @@
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 class DataView extends StatelessWidget {
+  final List<Map<String, dynamic>> _listMenu = [
+    {"name": "Spare Part"},
+    {"name": "Ban"},
+    {"name": "Vendor"},
+    {"name": "Brand"},
+    {"name": "Purchase Order"}
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,25 +26,38 @@ class DataView extends StatelessWidget {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: <Widget>[
-                  Card(
-                    color: Colors.blue,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                children: _listMenu.map((menu) {
+                  return Card(
+                    color: baseColor,
                     child: InkWell(
                       onTap: () {
                         // Aksi ketika card ditekan
                       },
-                      child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
                         child: Column(
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Icon(Icons.bus_alert, size: 50, color: Colors.white),
-                            SizedBox(height: 10),
-                            Text(
-                              'Spare Parts',
-                              style: TextStyle(fontSize: 20, color: Colors.white),
-                            ),
+                            Icon(Ionicons.albums_outline,
+                                size: 30, color: Colors.white),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  menu['name'],
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                                Text(
+                                  menu['name'],
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.white70),
+                                ),
+                              ],
+                            )
                             // Text(
                             //   '120',
                             //   style: TextStyle(fontSize: 18, color: Colors.white),
@@ -44,83 +66,8 @@ class DataView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  Card(
-                    color: Colors.green,
-                    child: InkWell(
-                      onTap: () {
-                        // Aksi ketika card ditekan
-                      },
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Icon(Icons.tire_repair, size: 50, color: Colors.white),
-                            SizedBox(height: 10),
-                            Text(
-                              'Ban',
-                              style: TextStyle(fontSize: 20, color: Colors.white),
-                            ),
-                            // Text(
-                            //   '12',
-                            //   style: TextStyle(fontSize: 18, color: Colors.white),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    color: Colors.orange,
-                    child: InkWell(
-                      onTap: () {
-                        // Aksi ketika card ditekan
-                      },
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Icon(Icons.people, size: 50, color: Colors.white),
-                            SizedBox(height: 10),
-                            Text(
-                              'Vendor',
-                              style: TextStyle(fontSize: 20, color: Colors.white),
-                            ),
-                            // Text(
-                            //   '30',
-                            //   style: TextStyle(fontSize: 18, color: Colors.white),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    color: Colors.red,
-                    child: InkWell(
-                      onTap: () {
-                        // Aksi ketika card ditekan
-                      },
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Icon(Icons.label, size: 50, color: Colors.white),
-                            SizedBox(height: 10),
-                            Text(
-                              'Brand',
-                              style: TextStyle(fontSize: 20, color: Colors.white),
-                            ),
-                            // Text(
-                            //   '5',
-                            //   style: TextStyle(fontSize: 18, color: Colors.white),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ),
           ],
