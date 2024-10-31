@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Untuk mengonversi JSON
 import 'package:Warehouse/app/data/constants.dart';
-
 import 'package:Warehouse/app/data/api_config.dart'; // Pastikan ini sesuai dengan lokasi file Anda
 
 class DashboardView extends StatefulWidget {
@@ -12,6 +11,7 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   final List<Map<String, dynamic>> _stockData = [];
+  final List<Map<String, dynamic>> _filteredStockData = [];
 
   final List<Map<String, dynamic>> _typePart = [
     {"id": "Parts", "name": "Spare Parts"},
@@ -28,6 +28,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   String _selectedBranchId = "ALL"; // Default ID yang dipilih
   String _selectedTypeParts = "Parts"; // Default ID yang dipilih
+  String _searchQuery = "";
 
   late String endpointSelected;
 
@@ -47,10 +48,15 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   // Fungsi untuk mengambil data dari API
+  bool _isLoading = false; // Track loading state
+
   Future<void> _fetchStockData() async {
+    setState(() {
+      _isLoading = true; // Set loading to true
+    });
+
     final response = await http.post(
-      Uri.parse(
-          "$backend_url/$endpointSelected"), // Menggunakan endpoint yang sesuai
+      Uri.parse("$backend_url/$endpointSelected"),
       headers: {
         'Content-Type': 'application/json',
         'WAREHOUSEKEY': ApiKey.key,
@@ -64,13 +70,32 @@ class _DashboardViewState extends State<DashboardView> {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       final List<dynamic> data = responseData['data'];
       setState(() {
-        _stockData.clear(); // Kosongkan data sebelumnya
-        _stockData.addAll(data.map(
-            (item) => item as Map<String, dynamic>)); // Tambahkan data baru
+        _stockData.clear();
+        _stockData.addAll(data.map((item) => item as Map<String, dynamic>));
+        _filterStockData();
       });
     } else {
       throw Exception('Failed to load stock data');
     }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _filterStockData() {
+    setState(() {
+      _filteredStockData.clear();
+      _filteredStockData.addAll(
+        _stockData.where((item) {
+          String nameAttribute =
+              (_selectedTypeParts == "Tires") ? 'name_tires' : 'name_part';
+          return (item[nameAttribute] ?? "")
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase());
+        }).toList(),
+      );
+    });
   }
 
   @override
@@ -197,57 +222,70 @@ class _DashboardViewState extends State<DashboardView> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
               ),
+              onChanged: (query) {
+                setState(() {
+                  _searchQuery = query;
+                  _filterStockData();
+                });
+              },
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _stockData.length,
-              itemBuilder: (context, index) {
-                final item = _stockData[index];
-                double halfWidth = MediaQuery.of(context).size.width * 0.5;
-                String nameAttribute = (_selectedTypeParts == "Tires")
-                    ? 'name_tires'
-                    : 'name_part';
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: containerPadding),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            width: halfWidth,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item[nameAttribute] ??
-                                      "Data Tidak Tersedia", // Tampilkan nama suku cadang
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text(
-                                  "${item['id_branch']} - ${item['type']}", // Tampilkan nama suku cadang
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black54),
-                                )
-                              ],
-                            )),
-                        Text(
-                          'Stok: ${item['stok']} ${item['unit']}', // Tampilkan jumlah stok
-                          style: TextStyle(fontSize: 14, color: Colors.black87),
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator()) // Show loader
+                : ListView.builder(
+                    itemCount: _filteredStockData.length,
+                    itemBuilder: (context, index) {
+                      final item = _filteredStockData[index];
+                      double halfWidth =
+                          MediaQuery.of(context).size.width * 0.5;
+                      String nameAttribute = (_selectedTypeParts == "Tires")
+                          ? 'name_tires'
+                          : 'name_part';
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: containerPadding),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  width: halfWidth,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item[nameAttribute] ??
+                                            "", // Tampilkan nama suku cadang
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                      Text(
+                                        "${item['id_branch']} - ${item['type']} ${_selectedTypeParts == "Tires" ? " - ${item['size']}" : ""}", // Tampilkan nama suku cadang
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black54),
+                                      )
+                                    ],
+                                  )),
+                              Text(
+                                'Stok: ${item['stok']} ${item['unit']}', // Tampilkan jumlah stok
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black87),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),
