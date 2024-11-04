@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       // getPages: AppPages.routes,
       // title: 'Flutter Login Example',
       theme: ThemeData(
-          // scaffoldBackgroundColor: Color.fromARGB(255, 240, 240, 240),
-          ),
+        scaffoldBackgroundColor: Colors.grey.shade100,
+      ),
       home: SplashView(),
       routes: {
         '/login': (context) => LoginView(), // Default route

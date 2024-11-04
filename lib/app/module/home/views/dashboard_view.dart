@@ -154,7 +154,7 @@ class _DashboardViewState extends State<DashboardView> {
                     decoration: BoxDecoration(
                       color: _selectedTypeParts == type['id']
                           ? accentColor
-                          : Colors.grey[200],
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -174,7 +174,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           ),
           SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 30),
+            padding: EdgeInsets.only(bottom: 20),
             scrollDirection: Axis.horizontal,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +193,7 @@ class _DashboardViewState extends State<DashboardView> {
                     decoration: BoxDecoration(
                       color: _selectedBranchId == type['branch_id']
                           ? accentColor
-                          : Colors.grey[200],
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -214,31 +214,29 @@ class _DashboardViewState extends State<DashboardView> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                bottom: 30, left: containerPadding, right: containerPadding),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Pencarian',
-                hintText: 'Cari berdasarkan nama',
-                prefixIcon: Icon(Icons.search),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Colors
-                          .grey.shade400), // Warna border saat tidak fokus
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: baseColor), // Warna border saat fokus
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-              ),
-              onChanged: (query) {
-                setState(() {
-                  _searchQuery = query;
-                  _filterStockData();
-                });
-              },
-            ),
+                bottom: 20, left: containerPadding, right: containerPadding),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15)),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Pencarian',
+                    hintText: 'Cari berdasarkan nama',
+                    prefixIcon: Icon(Icons.search),
+                    border: InputBorder.none, // Menghilangkan border
+                    enabledBorder: InputBorder
+                        .none, // Menghilangkan border saat tidak fokus
+                    focusedBorder:
+                        InputBorder.none, // Menghilangkan border saat fokus
+                  ),
+                  onChanged: (query) {
+                    setState(() {
+                      _searchQuery = query;
+                      _filterStockData();
+                    });
+                  },
+                )),
           ),
           Expanded(
             child: _isLoading
@@ -282,14 +280,46 @@ class _DashboardViewState extends State<DashboardView> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: Colors.black54),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text(
+                                          "Brand: ${item['brand']}", // Tampilkan nama suku cadang
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black54),
+                                        ),
                                       )
                                     ],
                                   )),
-                              Text(
-                                'Stok: ${item['stok']} ${item['unit']}', // Tampilkan jumlah stok
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black87),
-                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: item['stok'] == 0
+                                              ? Colors.red.shade400
+                                              : Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 3),
+                                      child: Text(
+                                        '${item['stok'] == 0 ? "Stok Habis" : "Stok Tersedia"}', // Tampilkan jumlah stok
+                                        style: TextStyle(
+                                            fontSize: 10, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Stok: ${item['stok']} ${item['unit']}', // Tampilkan jumlah stok
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black87),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),

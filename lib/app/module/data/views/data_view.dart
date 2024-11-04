@@ -1,6 +1,7 @@
 import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:Warehouse/app/module/purchase_order/po_index.dart';
 
 class DataView extends StatelessWidget {
   final List<Map<String, dynamic>> _listMenu = [
@@ -33,7 +34,12 @@ class DataView extends StatelessWidget {
                     color: baseColor,
                     child: InkWell(
                       onTap: () {
-                        // Aksi ketika card ditekan
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PoIndex()), // Ganti `NewView` dengan nama kelas tampilan yang ingin dituju
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15),
