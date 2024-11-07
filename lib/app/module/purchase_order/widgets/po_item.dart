@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:Warehouse/app/module/purchase_order/po_services.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -26,8 +26,6 @@ class PoItem extends StatelessWidget {
     }
   }
 
-  static const platform = MethodChannel('com.example.openurl');
-
   Future<void> _downloadDoc(
       BuildContext context, String idOrder, String nameVendor) async {
     try {
@@ -37,15 +35,10 @@ class PoItem extends StatelessWidget {
       if (successDecode != null &&
           successDecode['data'] != null &&
           successDecode['data']['link'] != null) {
-        String downloadadedLink = successDecode['data']['link'];
-        print('Download link: $downloadadedLink');
-
-        // Meluncurkan link di browser untuk mendownload
-        // if (await canLaunchUrl(Uri.parse(downloadadedLink))) {
-        //   await launchUrl(Uri.parse(downloadadedLink));
-        // } else {
-        //   print('Tidak dapat membuka link.');
-        // }
+        final downloadadedLink = successDecode['data']['link'];
+        if (!await launchUrl(Uri.parse(downloadadedLink), mode: LaunchMode.inAppBrowserView)) {
+          throw Exception('Could not launch $downloadadedLink');
+        }
       } else {
         print('Link tidak tersedia.');
       }
