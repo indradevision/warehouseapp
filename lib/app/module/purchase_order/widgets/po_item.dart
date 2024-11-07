@@ -1,10 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:Warehouse/app/module/purchase_order/po_services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class PoItem extends StatelessWidget {
   final Map<String, dynamic> item;
+  final OrderService _orderService = OrderService();
+  final DownloadService _downloadService = DownloadService();
+  final Future<void> Function() onApprove;
 
-  const PoItem({Key? key, required this.item}) : super(key: key);
+  Future<void> _approveOrder(BuildContext context) async {
+    bool success = await _orderService.approveOrder(item['id_order']);
+
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Order berhasil disetujui')),
+      );
+      await onApprove();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal menyetujui order')),
+      );
+    }
+  }
+
+  static const platform = MethodChannel('com.example.openurl');
+
+  Future<void> _downloadDoc(
+      BuildContext context, String idOrder, String nameVendor) async {
+    try {
+      String success = await _downloadService.downloadDoc(idOrder, nameVendor);
+      final successDecode = jsonDecode(success);
+
+      if (successDecode != null &&
+          successDecode['data'] != null &&
+          successDecode['data']['link'] != null) {
+        String downloadadedLink = successDecode['data']['link'];
+        print('Download link: $downloadadedLink');
+
+        // Meluncurkan link di browser untuk mendownload
+        if (await canLaunchUrl(Uri.parse(downloadadedLink))) {
+          await launchUrl(
+            Uri.parse(downloadadedLink),
+            mode:
+                LaunchMode.externalApplication, // Membuka di browser eksternal
+          );
+        } else {
+          print('Tidak dapat membuka link.');
+        }
+      } else {
+        print('Link tidak tersedia.');
+      }
+    } catch (e) {
+      print('Error downloading document: $e');
+    }
+  }
+
+  PoItem({required this.item, required this.onApprove, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +130,7 @@ class PoItem extends StatelessWidget {
 
   Widget _buildStatusRow(Map<String, dynamic> item) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.only(top: 8),
       child: Row(
         children: [
           _buildStatusChip('Sudah Input', item['input'] != "0"),
@@ -149,6 +204,7 @@ class PoItem extends StatelessWidget {
                 leading: Icon(Ionicons.checkmark_circle_outline),
                 title: Text('Setujui'),
                 onTap: () {
+                  _approveOrder(context);
                   Navigator.pop(context);
                 },
               ),
@@ -156,6 +212,7 @@ class PoItem extends StatelessWidget {
                 leading: Icon(Ionicons.arrow_down_circle_outline),
                 title: Text('Download'),
                 onTap: () {
+                  _downloadDoc(context, item['id_order'], item['vendor']);
                   Navigator.pop(context);
                 },
               ),
