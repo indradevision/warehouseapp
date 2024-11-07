@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:Warehouse/app/module/purchase_order/po_services.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -41,15 +41,11 @@ class PoItem extends StatelessWidget {
         print('Download link: $downloadadedLink');
 
         // Meluncurkan link di browser untuk mendownload
-        if (await canLaunchUrl(Uri.parse(downloadadedLink))) {
-          await launchUrl(
-            Uri.parse(downloadadedLink),
-            mode:
-                LaunchMode.externalApplication, // Membuka di browser eksternal
-          );
-        } else {
-          print('Tidak dapat membuka link.');
-        }
+        // if (await canLaunchUrl(Uri.parse(downloadadedLink))) {
+        //   await launchUrl(Uri.parse(downloadadedLink));
+        // } else {
+        //   print('Tidak dapat membuka link.');
+        // }
       } else {
         print('Link tidak tersedia.');
       }
