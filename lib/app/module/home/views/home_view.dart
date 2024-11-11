@@ -1,11 +1,14 @@
 import 'package:Warehouse/app/module/data/views/data_view.dart';
 import 'package:Warehouse/app/module/home/views/dashboard_view.dart';
 import 'package:Warehouse/app/module/order/views/order_view.dart';
+import 'package:Warehouse/app/module/purchase_order/po_index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Warehouse/app/data/constants.dart';
+import 'package:ionicons/ionicons.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _HomeViewState extends State<HomeView> {
     DashboardView(),
     OrderView(),
     DataView(),
+    PoIndex(),
   ];
 
   void _onItemTapped(int index) {
@@ -34,6 +38,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.grey.shade100,
         automaticallyImplyLeading: false,
         title: Container(
           width: MediaQuery.of(context).size.width * 0.25,
@@ -157,24 +162,29 @@ class _HomeViewState extends State<HomeView> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.indigo[800],
-        items: const <BottomNavigationBarItem>[
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
+            icon: Icon(
+                _selectedIndex == 0 ? Ionicons.grid : Ionicons.grid_outline),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.book_rounded),
+            icon: Icon(_selectedIndex == 1
+                ? Ionicons.reader
+                : Ionicons.reader_outline),
             label: 'Order',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
+            icon: Icon(_selectedIndex == 2
+                ? Ionicons.podium
+                : Ionicons.podium_outline),
             label: 'Data',
-          ),
+          )
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.grey[350],
-        unselectedItemColor: Colors.white,
+        selectedItemColor: baseColor,
+        unselectedItemColor: Colors.black54,
         onTap: _onItemTapped,
       ),
     );

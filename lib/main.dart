@@ -2,6 +2,7 @@ import 'package:Warehouse/app/module/home/views/home_view.dart';
 import 'package:Warehouse/app/module/login/controllers/login_controller.dart';
 import 'package:Warehouse/app/module/splash/views/splash_view.dart';
 import 'package:Warehouse/app/routes/app_pages.dart';
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,22 @@ class MyApp extends StatelessWidget {
       // getPages: AppPages.routes,
       // title: 'Flutter Login Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: baseColor, // Set the primary color
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.indigo, // Set primary swatch color
+        ).copyWith(
+          secondary: Colors.orange, // Set accent color
+        ),
+        // inputDecorationTheme: InputDecorationTheme(
+        //   enabledBorder: OutlineInputBorder(
+        //     borderSide: BorderSide(color: Colors.grey), // Default border color
+        //   ),
+        //   focusedBorder: OutlineInputBorder(
+        //     borderSide:
+        //         BorderSide(color: Colors.blue), // Border color when focused
+        //   ),
+        // ),
+        scaffoldBackgroundColor: Colors.grey.shade100,
       ),
       home: SplashView(),
       routes: {
