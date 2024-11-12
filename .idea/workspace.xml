@@ -11,9 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="05406e00-29d6-4429-aa6f-7ebb37dde545" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/module/data/views/data_view.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/app/module/home/views/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/module/home/views/home_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/module/login/views/login_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/module/login/views/login_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/module/purchase_order/po_index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/module/purchase_order/po_index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/module/spare_parts/sp_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/module/spare_parts/sp_services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/module/spare_parts/spare_parts_index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/module/spare_parts/spare_parts_index.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

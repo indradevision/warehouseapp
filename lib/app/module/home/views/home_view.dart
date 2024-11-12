@@ -80,6 +80,7 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
         ],
+        scrolledUnderElevation: 0,
       ),
       // drawer: Drawer(
       //   child: ListView(

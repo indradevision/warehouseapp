@@ -35,14 +35,14 @@ class SpItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${item['id_branch']} - ${item['type']} ",
+                      "${item['id_branch']}",
                       style:
                           const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Text(
-                        item['name_part'] ?? "",
+                        item['name_brand'] ?? "",
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
@@ -54,28 +54,14 @@ class SpItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: baseColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Text(
-                    "Stok: ${item['stok']}",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
                 Text(
-                  "Harga Satuan",
+                  "Total Nilai",
                   style: TextStyle(fontSize: 12, color: Colors.black54),
                 ),
                 Text(
-                  item['unit_price'] == null
+                  item['total_price'] == null
                       ? "NA"
-                      : "Rp ${_formatNumber(item['unit_price'])}",
+                      : "Rp ${_formatNumber(item['total_price'])}",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
               ],
@@ -108,7 +94,7 @@ class SpItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Brand: ${item['brand']}",
+            "Jumlah Item: ${item['total_item']}",
             style: TextStyle(fontSize: 12, color: Colors.black54),
           )
         ],
