@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         //         BorderSide(color: Colors.blue), // Border color when focused
         //   ),
         // ),
-        scaffoldBackgroundColor: Colors.grey.shade100,
+        scaffoldBackgroundColor: Colors.grey.shade200,
       ),
       home: SplashView(),
       routes: {

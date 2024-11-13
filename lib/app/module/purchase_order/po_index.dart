@@ -108,6 +108,7 @@ class _PoIndexState extends State<PoIndex> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text("Purchase Order"),
+        scrolledUnderElevation: 0,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

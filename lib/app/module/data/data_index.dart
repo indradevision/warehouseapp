@@ -2,14 +2,16 @@ import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:Warehouse/app/module/purchase_order/po_index.dart';
+import 'package:Warehouse/app/module/spare_parts/spare_parts_index.dart';
+import 'package:Warehouse/app/module/tires/tires_index.dart';
 
 class DataView extends StatelessWidget {
   final List<Map<String, dynamic>> _listMenu = [
-    {"name": "Spare Part"},
-    {"name": "Ban"},
-    {"name": "Vendor"},
-    {"name": "Brand"},
-    {"name": "Purchase Order"}
+    {"name": "Spare Part", "page": (context) => SpIndex()},
+    {"name": "Ban", "page": (context) => TrIndex()},
+    {"name": "Vendor", "page": (context) => PoIndex()},
+    {"name": "Brand", "page": (context) => PoIndex()},
+    {"name": "Purchase Order", "page": (context) => PoIndex()},
   ];
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,8 @@ class DataView extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  PoIndex()), // Ganti `NewView` dengan nama kelas tampilan yang ingin dituju
+                            builder: (context) => menu['page'](context),
+                          ),
                         );
                       },
                       child: Padding(

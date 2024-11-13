@@ -1,4 +1,4 @@
-import 'package:Warehouse/app/module/data/views/data_view.dart';
+import 'package:Warehouse/app/module/data/data_index.dart';
 import 'package:Warehouse/app/module/home/views/dashboard_view.dart';
 import 'package:Warehouse/app/module/order/views/order_view.dart';
 import 'package:Warehouse/app/module/purchase_order/po_index.dart';
@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade200,
         automaticallyImplyLeading: false,
         title: Container(
           width: MediaQuery.of(context).size.width * 0.25,
@@ -80,6 +80,7 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
         ],
+        scrolledUnderElevation: 0,
       ),
       // drawer: Drawer(
       //   child: ListView(
