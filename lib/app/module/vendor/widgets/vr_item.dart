@@ -2,7 +2,7 @@ import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class TrItem extends StatelessWidget {
+class VrItem extends StatelessWidget {
   final Map<String, dynamic> item;
 
   String _formatNumber(num number) {
@@ -13,7 +13,7 @@ class TrItem extends StatelessWidget {
         );
   }
 
-  TrItem({required this.item, Key? key}) : super(key: key);
+  VrItem({required this.item, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,22 +31,36 @@ class TrItem extends StatelessWidget {
           children: [
             Row(
               children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue.shade50,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Ionicons.business_outline,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${item['id_branch']}",
+                      "Nama Vendor",
                       style:
                           const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Text(
-                        item['name_brand'] ?? "",
+                        item['name_vendor'] ?? "",
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
-                    _buildVendorInfo(item),
+                    // _buildVendorInfo(item),
                   ],
                 ),
               ],
@@ -55,13 +69,7 @@ class TrItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "Total Nilai",
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-                Text(
-                  item['total_price'] == null
-                      ? "NA"
-                      : "Rp ${_formatNumber(item['total_price'])}",
+                  item['id_vendor'] ?? "",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
               ],

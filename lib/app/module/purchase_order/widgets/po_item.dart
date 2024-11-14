@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:Warehouse/app/module/purchase_order/po_services.dart';
+import 'package:Warehouse/app/module/purchase_order/po_single.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
+import 'package:Warehouse/app/module/purchase_order/widgets/po_single_item.dart';
 import 'dart:convert';
 
 class PoItem extends StatelessWidget {
@@ -36,7 +37,8 @@ class PoItem extends StatelessWidget {
           successDecode['data'] != null &&
           successDecode['data']['link'] != null) {
         final downloadadedLink = successDecode['data']['link'];
-        if (!await launchUrl(Uri.parse(downloadadedLink), mode: LaunchMode.inAppBrowserView)) {
+        if (!await launchUrl(Uri.parse(downloadadedLink),
+            mode: LaunchMode.inAppBrowserView)) {
           throw Exception('Could not launch $downloadadedLink');
         }
       } else {
@@ -188,6 +190,19 @@ class PoItem extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              ListTile(
+                leading: Icon(Ionicons.eye_outline),
+                title: Text('Selengkapnya'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PoSingle(
+                                idOrder: item['id_order'],
+                                vendor: item['vendor'],
+                              )));
+                },
               ),
               ListTile(
                 leading: Icon(Ionicons.checkmark_circle_outline),
