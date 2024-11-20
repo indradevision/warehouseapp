@@ -81,3 +81,27 @@ class DownloadService {
     }
   }
 }
+
+class PoSingleService {
+  static Future<Map<String, dynamic>> fetchSingleData(
+      String id_order, String vendor) async {
+    final response = await http.post(
+      Uri.parse("$backend_url/order/getdetailorder"),
+      headers: {
+        'Content-Type': 'application/json',
+        'WAREHOUSEKEY': ApiKey.key,
+      },
+      body: jsonEncode({
+        'id_order': id_order,
+        'vendor': vendor,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body) as Map<String, dynamic>;
+      return responseData['data'];
+    } else {
+      throw Exception('Failed to load PO Single data');
+    }
+  }
+}
