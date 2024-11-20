@@ -11,7 +11,7 @@ abstract class Routes {
 
 abstract class _Paths {
   _Paths._();
-  static const SPLASH = 'splash';
+  static const SPLASH = '/splash';
   static const LOGIN = '/login';
   static const HOME = '/home';
   static const MAINTENANCE = '/maintenance';

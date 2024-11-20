@@ -6,11 +6,27 @@ class SpItem extends StatelessWidget {
   final Map<String, dynamic> item;
 
   String _formatNumber(num number) {
-    // Pastikan number adalah angka dan bukan null
     return number.toString().replaceAllMapped(
           RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
           (match) => '${match[1]}.',
         );
+  }
+
+  String _getBranchDescription(String idBranch) {
+    switch (idBranch) {
+      case 'ALL':
+        return 'Semua Gudang';
+      case 'PKU':
+        return 'Pekanbaru';
+      case 'BKL':
+        return 'Bengkulu';
+      case 'JKT':
+        return 'Jakarta';
+      case 'SOLO':
+        return 'Solo';
+      default:
+        return idBranch;
+    }
   }
 
   SpItem({required this.item, Key? key}) : super(key: key);
@@ -35,9 +51,8 @@ class SpItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${item['id_branch']}",
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.black54),
+                      _getBranchDescription(item['id_branch']),
+                      style: const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.5,
