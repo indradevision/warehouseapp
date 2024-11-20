@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:Warehouse/app/module/tires/tr_services.dart';
 import 'package:Warehouse/app/module/tires/widgets/tr_item.dart';
 import 'package:Warehouse/app/module/tires/widgets/search_component.dart';
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/rendering.dart';
 
 class TrIndex extends StatefulWidget {
@@ -98,8 +99,12 @@ class _TrIndexState extends State<TrIndex> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text("Tires"),
+        backgroundColor: baseColor,
+        foregroundColor: Colors.white,
+        title: const Text(
+          "Tires",
+          style: TextStyle(color: Colors.white),
+        ),
         scrolledUnderElevation: 0,
       ),
       body: Column(

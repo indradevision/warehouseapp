@@ -52,12 +52,13 @@ class _PoSingleState extends State<PoSingle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: baseColor,
+        backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
         title: Text(
           _orderData?['id_order'] ?? "Order Detail",
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         scrolledUnderElevation: 0,
       ),
@@ -68,99 +69,109 @@ class _PoSingleState extends State<PoSingle> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  color: baseColor,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/images/bg-main.jpg'), // Gambar dari assets
+                      fit: BoxFit
+                          .cover, // Mengatur bagaimana gambar menyesuaikan container
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 60, left: 16, right: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Diorder oleh",
-                                style: TextStyle(
-                                    color: Colors.white70, fontSize: 12),
-                              ),
-                              Text(
-                                _orderData?['createdby'] ?? '',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "Pada ${_orderData?['date_issued']} Jam ${_orderData?['time']}",
-                                style: TextStyle(color: Colors.white70),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width:
-                                    36, // Width and height should be the same for a circle
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  color: _orderData?['approved'] == "0"
-                                      ? Colors.yellow.shade100
-                                      : Colors
-                                          .green, // Background color of the circle
-                                  shape: BoxShape
-                                      .circle, // Makes the container circular
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 8,
-                                      offset: Offset(0, 4), // Shadow position
-                                    ),
-                                  ],
+                SafeArea(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 80, left: 16, right: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Diorder oleh",
+                                  style: TextStyle(
+                                      color: Colors.white70, fontSize: 12),
                                 ),
-                                child: Icon(
+                                Text(
+                                  _orderData?['createdby'] ?? '',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Pada ${_orderData?['date_issued']} Jam ${_orderData?['time']}",
+                                  style: TextStyle(color: Colors.white70),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  width:
+                                      36, // Width and height should be the same for a circle
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                    color: _orderData?['approved'] == "0"
+                                        ? Colors.yellow.shade100
+                                        : Colors
+                                            .green, // Background color of the circle
+                                    shape: BoxShape
+                                        .circle, // Makes the container circular
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4), // Shadow position
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    _orderData?['approved'] == "0"
+                                        ? Ionicons.time_outline
+                                        : Ionicons.checkmark_outline,
+                                    color: _orderData?['approved'] == "0"
+                                        ? Colors.amber
+                                        : Colors.white,
+                                    size: 20, // Size of the icon
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
                                   _orderData?['approved'] == "0"
-                                      ? Ionicons.time_outline
-                                      : Ionicons.checkmark_outline,
-                                  color: _orderData?['approved'] == "0"
-                                      ? Colors.amber
-                                      : Colors.white,
-                                  size: 20, // Size of the icon
+                                      ? "Belum Disetujui"
+                                      : "Disetujui",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                _orderData?['approved'] == "0"
-                                    ? "Belum Disetujui"
-                                    : "Disetujui",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: _detailData.length,
-                          itemBuilder: (context, index) {
-                            final item = _detailData[index];
-                            return PoSingleItem(item: item);
-                          },
+                              ],
+                            )
+                          ],
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _detailData.length,
+                            itemBuilder: (context, index) {
+                              final item = _detailData[index];
+                              return PoSingleItem(item: item);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

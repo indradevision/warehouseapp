@@ -5,7 +5,7 @@ import 'package:Warehouse/app/routes/app_pages.dart';
 import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'app/module/login/views/login_view.dart';
 
 void main() {
@@ -28,23 +28,18 @@ class MyApp extends StatelessWidget {
       // getPages: AppPages.routes,
       // title: 'Flutter Login Example',
       theme: ThemeData(
-        primaryColor: baseColor, // Set the primary color
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.indigo, // Set primary swatch color
-        ).copyWith(
-          secondary: Colors.orange, // Set accent color
-        ),
-        // inputDecorationTheme: InputDecorationTheme(
-        //   enabledBorder: OutlineInputBorder(
-        //     borderSide: BorderSide(color: Colors.grey), // Default border color
-        //   ),
-        //   focusedBorder: OutlineInputBorder(
-        //     borderSide:
-        //         BorderSide(color: Colors.blue), // Border color when focused
-        //   ),
-        // ),
-        scaffoldBackgroundColor: Colors.grey.shade200,
-      ),
+          primaryColor: baseColor,
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.indigo,
+          ).copyWith(
+            secondary: Colors.orange,
+          ),
+          textTheme: GoogleFonts.rubikTextTheme(Theme.of(context).textTheme),
+          scaffoldBackgroundColor: Colors.grey.shade200,
+          appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+          )),
       home: SplashView(),
       routes: {
         '/login': (context) => LoginView(), // Default route

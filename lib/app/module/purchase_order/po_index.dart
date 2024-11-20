@@ -1,8 +1,9 @@
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:Warehouse/app/module/purchase_order/widgets/po_item.dart';
 import 'package:Warehouse/app/module/purchase_order/widgets/po_bottom_appbar.dart';
 import 'package:Warehouse/app/module/purchase_order/po_services.dart';
-import 'package:Warehouse/app/module/order/views/order_view.dart';
+import 'package:Warehouse/app/module/order/order_view.dart';
 import 'package:flutter/rendering.dart';
 
 class PoIndex extends StatefulWidget {
@@ -126,6 +127,7 @@ class _PoIndexState extends State<PoIndex> {
             ),
       floatingActionButton: _showFab
           ? FloatingActionButton(
+              backgroundColor: baseColor,
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => OrderView()));

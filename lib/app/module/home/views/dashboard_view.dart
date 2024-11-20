@@ -118,14 +118,14 @@ class _DashboardViewState extends State<DashboardView> {
                       child: Text(
                         "Hi, Admin",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Text(
                         "Kamu mempunyai 2 pesan",
-                        style: TextStyle(color: Colors.black54, fontSize: 16),
+                        style: TextStyle(color: Colors.black54, fontSize: 14),
                       ),
                     ),
                   ],
@@ -257,9 +257,17 @@ class _DashboardViewState extends State<DashboardView> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.08),
+                                spreadRadius: 1,
+                                blurRadius: 4,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                              horizontal: 20, vertical: 20),
                           margin: EdgeInsets.only(bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -273,7 +281,7 @@ class _DashboardViewState extends State<DashboardView> {
                                       Text(
                                         item[nameAttribute] ??
                                             "", // Tampilkan nama suku cadang
-                                        style: TextStyle(fontSize: 15),
+                                        style: TextStyle(fontSize: 14),
                                       ),
                                       Text(
                                         "${item['id_branch']} - ${item['type']} ${_selectedTypeParts == "Tires" ? " - ${item['size']}" : ""}", // Tampilkan nama suku cadang

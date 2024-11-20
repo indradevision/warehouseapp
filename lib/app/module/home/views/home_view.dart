@@ -1,6 +1,6 @@
 import 'package:Warehouse/app/module/data/data_index.dart';
 import 'package:Warehouse/app/module/home/views/dashboard_view.dart';
-import 'package:Warehouse/app/module/order/views/order_view.dart';
+import 'package:Warehouse/app/module/order/order_view.dart';
 import 'package:Warehouse/app/module/purchase_order/po_index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,83 +82,6 @@ class _HomeViewState extends State<HomeView> {
         ],
         scrolledUnderElevation: 0,
       ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         child: Row(
-      //           crossAxisAlignment: CrossAxisAlignment.center,
-      //           children: [
-      //             Icon(
-      //               Icons.person,
-      //               size: 50,
-      //               color: Colors.white,
-      //             ),
-      //             SizedBox(width: 16),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 mainAxisAlignment: MainAxisAlignment.center,
-      //                 children: [
-      //                   Text(
-      //                     'Nama Pengguna',
-      //                     style: TextStyle(
-      //                       fontSize: 20,
-      //                       color: Colors.white,
-      //                       fontWeight: FontWeight.bold,
-      //                     ),
-      //                   ),
-      //                   SizedBox(height: 4),
-      //                   Text(
-      //                     'email@example.com',
-      //                     style: TextStyle(
-      //                       fontSize: 16,
-      //                       color: Colors.white70,
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         decoration: BoxDecoration(
-      //           color: Colors.blueGrey,
-      //         ),
-      //       ),
-      //       ExpansionTile(
-      //         leading: Icon(Icons.list),
-      //         title: Text('Purchase Order'),
-      //         children: <Widget>[
-      //           ListTile(
-      //             title: Text('Data Order'),
-      //             onTap: () {
-      //               // Navigate to a specific page or perform any action
-      //             },
-      //           ),
-      //           ListTile(
-      //             title: Text('Riwayat Order'),
-      //             onTap: () {
-      //               // Navigate to a specific page or perform any action
-      //             },
-      //           ),
-      //         ],
-      //       ),
-      //       ListTile(
-      //         leading: Icon(Icons.logout),
-      //         title: Text('Logout'),
-      //         onTap: () {
-      //           // Perform logout action
-      //           logindata.setBool('login', true);
-      //           logindata.remove('role');
-      //           logindata.clear();
-      //           Restart.restartApp(); // Pastikan Restart sudah terkonfigurasi dengan benar
-      //           Get.offAllNamed('/login'); // Navigasi setelah logout
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -166,25 +89,73 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.white,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-                _selectedIndex == 0 ? Ionicons.grid : Ionicons.grid_outline),
+            icon: _selectedIndex == 0
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.grid,
+                      color: Colors
+                          .white, // Warna ini akan diabaikan karena gradien
+                    ),
+                  )
+                : Icon(Ionicons.grid_outline),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 1
-                ? Ionicons.reader
-                : Ionicons.reader_outline),
+            icon: _selectedIndex == 1
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.reader,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(Ionicons.reader_outline),
             label: 'Order',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 2
-                ? Ionicons.podium
-                : Ionicons.podium_outline),
+            icon: _selectedIndex == 2
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.podium,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(Ionicons.podium_outline),
             label: 'Data',
-          )
+          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: baseColor,
+        selectedItemColor:
+            baseColor, // Diabaikan karena kita menggunakan ShaderMask
         unselectedItemColor: Colors.black54,
         onTap: _onItemTapped,
       ),
