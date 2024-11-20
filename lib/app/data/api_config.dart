@@ -7,3 +7,7 @@ class ApiKey {
 class ApiLogin {
   static const String url = "$backend_url/login";
 }
+
+class ApiChekVersion {
+  static const String url = "$backend_url/checkversion";
+}

@@ -1,7 +1,6 @@
 import 'package:Warehouse/app/module/home/views/home_view.dart';
 import 'package:Warehouse/app/module/login/controllers/login_controller.dart';
 import 'package:Warehouse/app/module/splash/views/splash_view.dart';
-import 'package:Warehouse/app/routes/app_pages.dart';
 import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,32 +21,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(textTheme: GoogleFonts.openSansTextTheme()),
       title: "Warehouse",
-      initialRoute: AppPages.INITIAL,
-      // getPages: AppPages.routes,
-      // title: 'Flutter Login Example',
       theme: ThemeData(
-        primaryColor: baseColor, // Set the primary color
+        primaryColor: baseColor,
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.indigo, // Set primary swatch color
+          primarySwatch: Colors.indigo,
         ).copyWith(
-          secondary: Colors.orange, // Set accent color
+          secondary: Colors.orange,
         ),
-        // inputDecorationTheme: InputDecorationTheme(
-        //   enabledBorder: OutlineInputBorder(
-        //     borderSide: BorderSide(color: Colors.grey), // Default border color
-        //   ),
-        //   focusedBorder: OutlineInputBorder(
-        //     borderSide:
-        //         BorderSide(color: Colors.blue), // Border color when focused
-        //   ),
-        // ),
         scaffoldBackgroundColor: Colors.grey.shade200,
       ),
       home: SplashView(),
       routes: {
-        '/login': (context) => LoginView(), // Default route
+        '/login': (context) => LoginView(),
         '/home': (context) => HomeView(),
       },
     );
