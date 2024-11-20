@@ -1,6 +1,6 @@
 import 'package:Warehouse/app/module/data/data_index.dart';
 import 'package:Warehouse/app/module/home/views/dashboard_view.dart';
-import 'package:Warehouse/app/module/order/views/order_view.dart';
+import 'package:Warehouse/app/module/order/order_view.dart';
 import 'package:Warehouse/app/module/purchase_order/po_index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -101,25 +101,73 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.white,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-                _selectedIndex == 0 ? Ionicons.grid : Ionicons.grid_outline),
+            icon: _selectedIndex == 0
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.grid,
+                      color: Colors
+                          .white, // Warna ini akan diabaikan karena gradien
+                    ),
+                  )
+                : Icon(Ionicons.grid_outline),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 1
-                ? Ionicons.reader
-                : Ionicons.reader_outline),
+            icon: _selectedIndex == 1
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.reader,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(Ionicons.reader_outline),
             label: 'Order',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 2
-                ? Ionicons.podium
-                : Ionicons.podium_outline),
+            icon: _selectedIndex == 2
+                ? ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Color.fromARGB(255, 0, 179, 255),
+                          Color(0xFF0026ff)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: Icon(
+                      Ionicons.podium,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(Ionicons.podium_outline),
             label: 'Data',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: accentColor,
+        selectedItemColor:
+            baseColor, // Diabaikan karena kita menggunakan ShaderMask
         unselectedItemColor: Colors.black54,
         onTap: _onItemTapped,
       ),

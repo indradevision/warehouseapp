@@ -11,22 +11,22 @@ class DataView extends StatelessWidget {
     {
       "name": "Spare Part",
       "page": (context) => SpIndex(),
-      "icon": Ionicons.construct_outline, // No need to use function
+      "images": "assets/images/sp-il.jpg", // No need to use function
     },
     {
       "name": "Ban",
       "page": (context) => TrIndex(),
-      "icon": Ionicons.radio_button_on_outline
+      "images": "assets/images/tr-il.jpg"
     },
     {
       "name": "Vendor",
       "page": (context) => VrIndex(),
-      "icon": Ionicons.storefront_outline
+      "images": "assets/images/jb-il.jpg"
     },
     {
       "name": "Purchase Order",
       "page": (context) => PoIndex(),
-      "icon": Ionicons.document_text_outline
+      "images": "assets/images/po-il.jpg"
     },
   ];
 
@@ -46,11 +46,26 @@ class DataView extends StatelessWidget {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
+                crossAxisSpacing: 14,
+                mainAxisSpacing: 14,
                 children: _listMenu.map((menu) {
-                  return Card(
-                    color: baseColor,
+                  return Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/bg-item.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 1,
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -60,36 +75,46 @@ class DataView extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Icon(menu['icon'],
-                                size: 30,
-                                color: Colors.white70), // Direct icon reference
-                            Column(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(menu['images']),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   menu['name'],
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   menu['name'],
                                   style: TextStyle(
-                                      fontSize: 12, color: Colors.white70),
+                                      fontSize: 12, color: Colors.black45),
                                 ),
                               ],
-                            )
-                            // Text(
-                            //   '120',
-                            //   style: TextStyle(fontSize: 18, color: Colors.white),
-                            // ),
-                          ],
-                        ),
+                            ),
+                          )
+                          // Text(
+                          //   '120',
+                          //   style: TextStyle(fontSize: 18, color: Colors.white),
+                          // ),
+                        ],
                       ),
                     ),
                   );

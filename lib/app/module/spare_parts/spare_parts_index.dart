@@ -1,3 +1,4 @@
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:Warehouse/app/module/spare_parts/sp_services.dart';
 import 'package:Warehouse/app/module/spare_parts/widgets/sp_item.dart';
@@ -98,8 +99,12 @@ class _SpIndexState extends State<SpIndex> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text("Spare Parts"),
+        backgroundColor: baseColor,
+        foregroundColor: Colors.white,
+        title: const Text(
+          "Spare Parts",
+          style: TextStyle(color: Colors.white),
+        ),
         scrolledUnderElevation: 0,
       ),
       body: Column(
