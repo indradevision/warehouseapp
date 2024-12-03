@@ -1,3 +1,4 @@
+import 'package:Warehouse/app/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -12,50 +13,74 @@ class PoSingleItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [itemBoxShadow]),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
         margin: const EdgeInsets.only(bottom: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Text(
-                      item['id_order'] ?? "",
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.black54),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item['id_order'] ?? "",
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black54),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Text(
+                            item['name_part'] ?? "",
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        _buildStatusRow(item),
+                        _buildVendorInfo(item),
+                      ],
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: Text(
-                        item['name_part'] ?? "",
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    _buildStatusRow(item),
-                    _buildVendorInfo(item),
                   ],
                 ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "Jumlah Order",
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-                Text(
-                  "${item['quantity'] ?? ""} ${item['unit']}",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Jumlah Order",
+                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                    ),
+                    Text(
+                      "${item['quantity'] ?? ""} ${item['unit']}",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    )
+                  ],
                 )
               ],
-            )
+            ),
+            item['note'] != null
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Text(item['note'] ?? ""),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox.shrink()
           ],
         ),
       ),

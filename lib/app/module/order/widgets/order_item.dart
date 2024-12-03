@@ -10,12 +10,22 @@ import 'package:flutter/services.dart';
 class OrderSingleItem extends StatefulWidget {
   final VoidCallback onDelete;
   final int itemNumber;
+  final String selectedEndpoint;
+  final Function({
+    required String selectedId,
+    required String selectedPart,
+    required String selectedType,
+    required String selectedBrand,
+    required String selectedUnitStock,
+  }) updateSelectedItems;
 
-  const OrderSingleItem({
-    Key? key,
-    required this.onDelete,
-    required this.itemNumber,
-  }) : super(key: key);
+  const OrderSingleItem(
+      {Key? key,
+      required this.onDelete,
+      required this.itemNumber,
+      required this.selectedEndpoint,
+      required this.updateSelectedItems})
+      : super(key: key);
 
   @override
   _OrderSingleItemState createState() => _OrderSingleItemState();
@@ -35,13 +45,14 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
   final List<Map<String, dynamic>> _filteredStockData = [];
   final List<Map<String, dynamic>> _filteredVendorData = [];
 
-  Future<void> _loadPart() async {
+  Future<void> _loadPart(String selectedEndpoint) async {
     try {
-      List<Map<String, dynamic>> data = await SpData.fetchAllData();
+      List<Map<String, dynamic>> data =
+          await SpData.fetchAllData(selectedEndpoint);
       setState(() {
         partList.clear();
         partList.addAll(data);
-        _filterPartData();
+        _filterPartData(selectedEndpoint);
       });
     } catch (e) {
       print('Failed to load PO data: $e');
@@ -61,12 +72,13 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
     }
   }
 
-  void _filterPartData() {
+  void _filterPartData(String selectedEndpoint) {
     setState(() {
       _filteredStockData.clear();
       _filteredStockData.addAll(
         partList.where((item) {
-          String nameAttribute = 'name_part';
+          String nameAttribute =
+              selectedEndpoint == "getalltire" ? "name_tires" : "name_part";
           return (item[nameAttribute] ?? "")
               .toLowerCase()
               .contains(_searchQuery.toLowerCase());
@@ -92,7 +104,7 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
   @override
   void initState() {
     super.initState();
-    _loadPart();
+    _loadPart(widget.selectedEndpoint);
     _loadVendor();
   }
 
@@ -113,7 +125,7 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
                 children: [
                   Text(
                     "Barang ${widget.itemNumber}",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   ElevatedButton(
                     onPressed: widget.onDelete,
@@ -180,7 +192,8 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
                                     onChanged: (query) {
                                       setState(() {
                                         _searchQuery = query;
-                                        _filterPartData();
+                                        _filterPartData(
+                                            widget.selectedEndpoint);
                                       });
                                     },
                                   ),
@@ -210,15 +223,20 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    item['name_part'] ??
-                                                        'Kosong',
+                                                    widget.selectedEndpoint ==
+                                                            "getalltire"
+                                                        ? item['name_tires']
+                                                        : item['name_part'],
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize: 14),
                                                   ),
                                                   Text(
-                                                    item['id_part'],
+                                                    widget.selectedEndpoint ==
+                                                            "getalltire"
+                                                        ? item['id_tires']
+                                                        : item['id_part'],
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black54),
@@ -226,33 +244,86 @@ class _OrderSingleItemState extends State<OrderSingleItem> {
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey.shade200,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: Text(
-                                                item['brand'],
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey.shade700,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                widget.selectedEndpoint ==
+                                                        "getalltire"
+                                                    ? Container(
+                                                        decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .grey.shade600,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5)),
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 5),
+                                                        child: Text(
+                                                          "SIZE ${item['size']}",
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : SizedBox.shrink(),
+                                                SizedBox(
+                                                  height: 5,
                                                 ),
-                                              ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade200,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                                  child: Text(
+                                                    item['brand'],
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color:
+                                                          Colors.grey.shade700,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             )
                                           ],
                                         ),
                                         onTap: () {
                                           setState(() {
-                                            selectedId = item['id_part'];
-                                            selectedPart = item['name_part'];
+                                            selectedId =
+                                                widget.selectedEndpoint ==
+                                                        "getalltire"
+                                                    ? item['id_tires']
+                                                    : item['id_part'];
+                                            selectedPart =
+                                                widget.selectedEndpoint ==
+                                                        "getalltire"
+                                                    ? item['name_tires']
+                                                    : item['name_part'];
                                             selectedStock = item['stok'];
                                             selectedType = item['type'];
                                             selectedBrand = item['brand'];
                                             selectedUnitStock = item['unit'];
                                           });
                                           Navigator.pop(context);
+
+                                          widget.updateSelectedItems(
+                                            selectedId: selectedId,
+                                            selectedPart: selectedPart,
+                                            selectedType: selectedType,
+                                            selectedBrand: selectedBrand,
+                                            selectedUnitStock:
+                                                selectedUnitStock,
+                                          );
                                         },
                                       );
                                     },

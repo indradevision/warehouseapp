@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: bodyColor,
         automaticallyImplyLeading: false,
         title: Container(
           width: MediaQuery.of(context).size.width * 0.25,

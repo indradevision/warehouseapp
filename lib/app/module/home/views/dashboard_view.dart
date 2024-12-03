@@ -257,14 +257,7 @@ class _DashboardViewState extends State<DashboardView> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.08),
-                                spreadRadius: 1,
-                                blurRadius: 4,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
+                            boxShadow: [itemBoxShadow],
                           ),
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 20),

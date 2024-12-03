@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             secondary: Colors.orange,
           ),
           textTheme: GoogleFonts.rubikTextTheme(Theme.of(context).textTheme),
-          scaffoldBackgroundColor: Colors.grey.shade200,
+          scaffoldBackgroundColor: bodyColor,
           appBarTheme: AppBarTheme(
             titleTextStyle: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
