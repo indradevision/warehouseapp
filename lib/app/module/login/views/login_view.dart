@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
         _passwordController.text,
       );
 
-      Navigator.of(context).pushReplacementNamed('/home'); // Navigasi ke Home
+      Navigator.of(context).pushReplacementNamed('/home');
     } catch (error) {
       _showErrorDialog(error.toString());
     } finally {
@@ -78,7 +78,8 @@ class _LoginViewState extends State<LoginView> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Versi Baru Tersedia"),
-            content: Text("Silakan melakukan update dengan klik tombol di bawah."),
+            content:
+                Text("Silakan melakukan update dengan klik tombol di bawah."),
             actions: [
               TextButton(
                 onPressed: () {
@@ -136,7 +137,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ],
               ),
-
               Column(
                 children: [
                   if (_isLoading)
@@ -148,7 +148,8 @@ class _LoginViewState extends State<LoginView> {
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(baseColor),
-                          foregroundColor: MaterialStateProperty.all(Colors.white),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.white),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),

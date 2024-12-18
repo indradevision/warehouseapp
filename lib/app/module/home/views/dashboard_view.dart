@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Untuk mengonversi JSON
 import 'package:Warehouse/app/data/constants.dart';
-import 'package:Warehouse/app/data/api_config.dart'; // Pastikan ini sesuai dengan lokasi file Anda
+import 'package:Warehouse/app/data/api_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardView extends StatefulWidget {
   @override
@@ -47,6 +48,7 @@ class _DashboardViewState extends State<DashboardView> {
     super.initState();
     _selectEndpoint();
     _fetchStockData();
+    getUserName();
   }
 
   // Fungsi untuk mengambil data dari API
@@ -100,6 +102,11 @@ class _DashboardViewState extends State<DashboardView> {
     });
   }
 
+  Future<String?> getUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userName');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,13 +121,26 @@ class _DashboardViewState extends State<DashboardView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: containerPadding),
-                      child: Text(
-                        "Hi, Admin",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                        padding: const EdgeInsets.only(top: containerPadding),
+                        child: FutureBuilder<String?>(
+                            future: getUserName(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String?> snapshot) {
+                              if (snapshot.hasData && snapshot.data != null) {
+                                return Text('Hi, ${snapshot.data}',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight
+                                            .w600)); // Tampilkan nama pengguna
+                              } else {
+                                return Text(
+                                  'Hi, Guest',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                );
+                              }
+                            })),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Text(

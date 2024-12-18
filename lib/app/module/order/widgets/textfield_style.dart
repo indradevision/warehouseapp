@@ -9,19 +9,21 @@ class OrderTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
-  final VoidCallback? onTap; // Tambahkan parameter onTap
+  final VoidCallback? onTap;
+  final ValueChanged<String>? onChanged;
 
-  const OrderTextFormField({
-    Key? key,
-    required this.labelText,
-    this.hintText,
-    this.readOnly = false,
-    this.keyboardType = TextInputType.text,
-    this.validator,
-    this.controller,
-    this.inputFormatters,
-    this.onTap, // Inisialisasi onTap di constructor
-  }) : super(key: key);
+  const OrderTextFormField(
+      {Key? key,
+      required this.labelText,
+      this.hintText,
+      this.readOnly = false,
+      this.keyboardType = TextInputType.text,
+      this.validator,
+      this.controller,
+      this.inputFormatters,
+      this.onTap,
+      this.onChanged})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class OrderTextFormField extends StatelessWidget {
         ),
       ),
       validator: validator,
+      onChanged: onChanged,
     );
   }
 }
