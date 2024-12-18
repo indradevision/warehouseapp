@@ -25,7 +25,7 @@ class _PoIndexState extends State<PoIndex> {
       .split('T')
       .first;
   String selectedToDate = DateTime.now().toIso8601String().split('T').first;
-  String selectedBranch = "SOLO";
+  String selectedBranch = "ALL";
 
   late ScrollController _controller;
 

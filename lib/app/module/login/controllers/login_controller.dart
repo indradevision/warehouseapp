@@ -20,13 +20,22 @@ class LoginController with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
+        final name = responseData['data']['name'];
+        final idU = responseData['data']['id'];
+
+        print("Login success $idU");
 
         final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userName', name);
+        await prefs.setInt('idUser', idU);
         await prefs.setBool('isLoggedIn', true);
 
         notifyListeners();
       } else {
-        throw Exception('Failed to login');
+        final errorResponse = json.decode(response.body);
+        final errorMessage = errorResponse['error'] ?? 'Unknown error occurred';
+
+        throw Exception('Failed to login: $errorMessage');
       }
     } catch (error) {
       throw error;

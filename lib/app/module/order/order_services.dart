@@ -48,7 +48,7 @@ class VData {
 class RequestPo {
   Future<bool> postRequest(
     String selectedType,
-    String id_user,
+    int id_user,
     String id_branch,
     List id_part,
     List name_part,
@@ -58,33 +58,46 @@ class RequestPo {
     List quantity,
     List unit,
     List desc,
+    List size,
     String createdby,
   ) async {
+    Map<String, dynamic> body = {
+      "id_user": "$id_user",
+      "id_branch": "$id_branch",
+      "brand": brand,
+      "vendor": vendor,
+      "type": type,
+      "quantity": quantity,
+      "unit": unit,
+      "desc": desc,
+      "createdby": 'Adri',
+    };
+
+    // Conditionally add "size" if selectedType is "getalltire"
+    if (selectedType == "getalltire") {
+      body["size"] = size;
+      body["id_tires"] = id_part;
+      body["name_tires"] = name_part;
+    } else {
+      body["id_part"] = id_part;
+      body["name_part"] = name_part;
+    }
+
+    // Send the request
     final response = await http.post(
-      Uri.parse("$backend_url/$selectedType"),
+      Uri.parse(
+          "$backend_url/order/${selectedType == "getalltire" ? "createordertires" : "createorderparts"}"),
       headers: {
         'Content-Type': 'application/json',
         'WAREHOUSEKEY': ApiKey.key,
       },
-      body: jsonEncode({
-        "id_user": "1",
-        "id_branch": id_branch,
-        selectedType == "getalltire" ? "id_tires" : "id_part": id_part,
-        selectedType == "getalltire" ? "name_tires" : "name_part": name_part,
-        "brand": brand,
-        "vendor": vendor,
-        "type": type,
-        "quantity": quantity,
-        "unit": unit,
-        "desc": desc,
-        "createdby": createdby
-      }),
+      body: jsonEncode(body),
     );
 
     if (response.statusCode == 200) {
       return true;
     } else {
-      print('Failed to make po request: ${response.body}');
+      print('Failed to make PO request: ${response.body}');
       return false;
     }
   }

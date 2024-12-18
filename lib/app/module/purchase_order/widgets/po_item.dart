@@ -3,14 +3,26 @@ import 'package:ionicons/ionicons.dart';
 import 'package:Warehouse/app/module/purchase_order/po_services.dart';
 import 'package:Warehouse/app/module/purchase_order/po_single.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:Warehouse/app/module/purchase_order/widgets/po_single_item.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:Warehouse/app/data/constants.dart';
 
 class PoItem extends StatelessWidget {
   final Map<String, dynamic> item;
   final OrderService _orderService = OrderService();
   final DownloadService _downloadService = DownloadService();
   final Future<void> Function() onApprove;
+
+  String formatDate(DateTime date) {
+    // Gunakan DateFormat untuk format 'dd MMMM yyyy'
+    return DateFormat('d MMMM yyyy').format(date);
+  }
+
+  String dateFormatted({required String datePlain}) {
+    DateTime now = DateTime.parse(datePlain);
+    return DateFormat('d MMMM yyyy')
+        .format(now); // Mengembalikan string tanggal yang sudah diformat
+  }
 
   Future<void> _approveOrder(BuildContext context) async {
     bool success = await _orderService.approveOrder(item['id_order']);
@@ -58,9 +70,9 @@ class PoItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [itemBoxShadow]),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
         margin: const EdgeInsets.only(bottom: 10),
         child: Row(
@@ -154,7 +166,7 @@ class PoItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Brand: ${item['brand']}",
+            dateFormatted(datePlain: item['created_at']),
             style: TextStyle(fontSize: 12, color: Colors.black54),
           ),
           Text(
@@ -204,14 +216,15 @@ class PoItem extends StatelessWidget {
                               )));
                 },
               ),
-              ListTile(
-                leading: Icon(Ionicons.checkmark_circle_outline),
-                title: Text('Setujui'),
-                onTap: () {
-                  _approveOrder(context);
-                  Navigator.pop(context);
-                },
-              ),
+              if (item['approved'] != "1")
+                ListTile(
+                  leading: Icon(Ionicons.checkmark_circle_outline),
+                  title: Text('Setujui'),
+                  onTap: () {
+                    _approveOrder(context);
+                    Navigator.pop(context);
+                  },
+                ),
               ListTile(
                 leading: Icon(Ionicons.arrow_down_circle_outline),
                 title: Text('Download'),

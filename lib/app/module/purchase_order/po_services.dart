@@ -20,7 +20,17 @@ class PoService {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-      return List<Map<String, dynamic>>.from(responseData['data']);
+      List<Map<String, dynamic>> data =
+          List<Map<String, dynamic>>.from(responseData['data']);
+
+      // Mengurutkan data berdasarkan 'created_at' (tanggal), misalnya dalam urutan descending
+      data.sort((a, b) {
+        DateTime dateA = DateTime.parse(a['created_at']);
+        DateTime dateB = DateTime.parse(b['created_at']);
+        return dateB.compareTo(dateA); // Descending
+      });
+
+      return data;
     } else {
       throw Exception('Failed to load PO data');
     }
