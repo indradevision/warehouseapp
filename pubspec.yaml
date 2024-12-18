@@ -28,15 +28,11 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
 
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/main-logo.png"
 
 flutter:
 
